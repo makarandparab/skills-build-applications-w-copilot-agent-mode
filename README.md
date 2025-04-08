@@ -1,6 +1,6 @@
 # Build applications with GitHub Copilot agent mode
 
-<!-- ![](https://github.com/makarandparab/skills-build-applications-w-copilot-agent-mode/actions/workflows/0-start-course.yml/badge.svg?branch=main) -->
+<!-- ![](https://github.com/makarandparab/redesigned-spork-g6pj46rr9hpp6x/actions/workflows/0-start-course.yml/badge.svg?branch=main) -->
 <img src="https://github.com/user-attachments/assets/8c45e716-1d95-473b-8923-dbbbf0f924b2" alt="octofit-tracker-app" width="30%" height="30%"/>
 
 _Build an application with GitHub Copilot agent mode in less than an hour._
@@ -35,7 +35,7 @@ In this exercise, you will:
 2. In the new tab, most of the fields will automatically fill in for you.
 
    - For owner, choose your personal account or an organization to host the repository.
-   - We recommend creating a public repository, as private repositories will use [Actions minutes](https://docs.github.chttps://github.com/makarandparab/skills-build-applications-w-copilot-agent-mode/billing/managing-billing-for-github-actions/about-billing-for-github-actions).
+   - We recommend creating a public repository, as private repositories will use [Actions minutes](https://docs.github.chttps://github.com/makarandparab/redesigned-spork-g6pj46rr9hpp6x/billing/managing-billing-for-github-actions/about-billing-for-github-actions).
    - Scroll down and click the **Create repository** button at the bottom of the form.
 
 3. After your new repository is created, wait about 20 seconds for the exercise to be prepared and buttons updated. You will continue working from your copy of the exercise.
@@ -46,7 +46,7 @@ In this exercise, you will:
 
 4. Click **Start Exercise**. Follow the step-by-step instructions and feedback will be provided as you progress.
 
-   <a id="start-exercise" href="https://github.com/makarandparab/skills-build-applications-w-copilot-agent-mode/issues/1">
+   <a id="start-exercise" href="https://github.com/makarandparab/redesigned-spork-g6pj46rr9hpp6x/issues/1">
       <img src="https://img.shields.io/badge/🚀_Start_Exercise-008000" height="25pt"/>
    </a>
 
