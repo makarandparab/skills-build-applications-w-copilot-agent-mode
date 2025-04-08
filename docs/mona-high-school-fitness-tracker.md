@@ -388,7 +388,7 @@ def api_root(request, format=None):
     if request.method == 'POST':
         return Response({"message": "POST request received"}, status=status.HTTP_201_CREATED)
 
-    base_url = '[USE CODESPACE URL]'
+    base_url = 'http://redesigned-spork-g6pj46rr9hpp6x-8000.app.github.dev/'
     return Response({
         'users': base_url + 'api/users/?format=api',
         'teams': base_url + 'api/teams/?format=api',
@@ -555,8 +555,8 @@ python monafit-tracker/backendmanage.py monafit-tracker/backend/populate_db
 ```text
 Let's do the following step by step
 
-- Update #file:monafit-tracker/backend/monafit_tracker/views.py to replace the return for the rest api url endpiints with the codespace url http://[REPLACE-THIS-WITH-YOUR-CODESPACE-NAME]-8000.app.github.dev for django
-- Replace <codespace-name> with [REPLACE-THIS-WITH-YOUR-CODESPACE-NAME]
+- Update #file:monafit-tracker/backend/monafit_tracker/views.py to replace the return for the rest api url endpiints with the codespace url http://redesigned-spork-g6pj46rr9hpp6x-8000.app.github.dev for django
+- Replace <codespace-name> with redesigned-spork-g6pj46rr9hpp6x
 - Run the Django server
 
 HTTP 200 OK
@@ -577,11 +577,11 @@ becomes
 HTTP 200 OK Allow: GET, HEAD, OPTIONS Content-Type: application/json Vary: Accept
 
 { 
-    "users": "http://<codespace-name>-8000.app.github.dev/api/users/?format=api",
-    "teams": "http://<codespace-name>-8000.app.github.dev/api/teams/?format=api",
-    "activities": "http://<codespace-name>-8000.app.github.dev/api/activities/?format=api",
-    "leaderboard": "http://<codespace-name>-8000.app.github.dev/api/leaderboard/?format=api",
-    "workouts": "http://<codespace-name>-8000.app.github.dev/api/workouts/?format=api" 
+    "users": "http://redesigned-spork-g6pj46rr9hpp6x-8000.app.github.dev/api/users/?format=api",
+    "teams": "http://redesigned-spork-g6pj46rr9hpp6x-8000.app.github.dev/api/teams/?format=api",
+    "activities": "http://redesigned-spork-g6pj46rr9hpp6x-8000.app.github.dev/api/activities/?format=api",
+    "leaderboard": "http://redesigned-spork-g6pj46rr9hpp6x-8000.app.github.dev/api/leaderboard/?format=api",
+    "workouts": "http://redesigned-spork-g6pj46rr9hpp6x-8000.app.github.dev/api/workouts/?format=api" 
 }
 ```
 
@@ -599,7 +599,7 @@ from .models import User, Team, Activity, Leaderboard, Workout
 
 @api_view(['GET'])
 def api_root(request, format=None):
-    base_url = 'http://[REPLACE-THIS-WITH-YOUR-CODESPACE-NAME]-8000.app.github.dev/'
+    base_url = 'http://redesigned-spork-g6pj46rr9hpp6x-8000.app.github.dev/'
     return Response({
         'users': base_url + 'api/users/?format=api',
         'teams': base_url + 'api/teams/?format=api',
