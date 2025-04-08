@@ -13,57 +13,63 @@ class Command(BaseCommand):
         client = MongoClient(settings.DATABASES['default']['HOST'], settings.DATABASES['default']['PORT'])
         db = client[settings.DATABASES['default']['NAME']]
 
-        # Drop existing collections
-        db.users.drop()
-        db.teams.drop()
-        db.activity.drop()
-        db.leaderboard.drop()
-        db.workouts.drop()
+        # Drop all collections and their indexes to ensure a clean state
+        collections = db.list_collection_names()
+        for collection in collections:
+            db[collection].drop()
 
-        # Create users
-        users = [
-            User(_id=ObjectId(), username='thundergod', email='thundergod@mhigh.edu', password='thundergodpassword'),
-            User(_id=ObjectId(), username='metalgeek', email='metalgeek@mhigh.edu', password='metalgeekpassword'),
-            User(_id=ObjectId(), username='zerocool', email='zerocool@mhigh.edu', password='zerocoolpassword'),
-            User(_id=ObjectId(), username='crashoverride', email='crashoverride@hmhigh.edu', password='crashoverridepassword'),
-            User(_id=ObjectId(), username='sleeptoken', email='sleeptoken@mhigh.edu', password='sleeptokenpassword'),
-        ]
-        User.objects.bulk_create(users)
+        # Recreate collections with unique constraints
+        db.create_collection('users')
+        db.users.create_index('email', unique=True)
 
-        # Create teams
-        team = Team(_id=ObjectId(), name='Blue Team')
-        team.save()
-        for user in users:
-            team.members.add(user)
+        db.create_collection('teams')
+        db.teams.create_index('name', unique=True)
 
-        # Create activities
-        activities = [
-            Activity(_id=ObjectId(), user=users[0], activity_type='Cycling', duration=timedelta(hours=1)),
-            Activity(_id=ObjectId(), user=users[1], activity_type='Crossfit', duration=timedelta(hours=2)),
-            Activity(_id=ObjectId(), user=users[2], activity_type='Running', duration=timedelta(hours=1, minutes=30)),
-            Activity(_id=ObjectId(), user=users[3], activity_type='Strength', duration=timedelta(minutes=30)),
-            Activity(_id=ObjectId(), user=users[4], activity_type='Swimming', duration=timedelta(hours=1, minutes=15)),
-        ]
-        Activity.objects.bulk_create(activities)
+        db.create_collection('activity')
+        db.activity.create_index('activity_id', unique=True)
 
-        # Create leaderboard entries
-        leaderboard_entries = [
-            Leaderboard(_id=ObjectId(), user=users[0], score=100),
-            Leaderboard(_id=ObjectId(), user=users[1], score=90),
-            Leaderboard(_id=ObjectId(), user=users[2], score=95),
-            Leaderboard(_id=ObjectId(), user=users[3], score=85),
-            Leaderboard(_id=ObjectId(), user=users[4], score=80),
-        ]
-        Leaderboard.objects.bulk_create(leaderboard_entries)
+        db.create_collection('leaderboard')
+        db.leaderboard.create_index('leaderboard_id', unique=True)
 
-        # Create workouts
-        workouts = [
-            Workout(_id=ObjectId(), name='Cycling Training', description='Training for a road cycling event'),
-            Workout(_id=ObjectId(), name='Crossfit', description='Training for a crossfit competition'),
-            Workout(_id=ObjectId(), name='Running Training', description='Training for a marathon'),
-            Workout(_id=ObjectId(), name='Strength Training', description='Training for strength'),
-            Workout(_id=ObjectId(), name='Swimming Training', description='Training for a swimming competition'),
-        ]
-        Workout.objects.bulk_create(workouts)
+        db.create_collection('workouts')
+        db.workouts.create_index('workout_id', unique=True)
+
+        # Insert data into MongoDB using pymongo
+        db.users.insert_many([
+            {"_id": ObjectId(), "username": "thundergod", "email": "thundergod@mhigh.edu", "password": "thundergodpassword"},
+            {"_id": ObjectId(), "username": "metalgeek", "email": "metalgeek@mhigh.edu", "password": "metalgeekpassword"},
+            {"_id": ObjectId(), "username": "zerocool", "email": "zerocool@mhigh.edu", "password": "zerocoolpassword"},
+            {"_id": ObjectId(), "username": "crashoverride", "email": "crashoverride@hmhigh.edu", "password": "crashoverridepassword"},
+            {"_id": ObjectId(), "username": "sleeptoken", "email": "sleeptoken@mhigh.edu", "password": "sleeptokenpassword"},
+        ])
+
+        db.teams.insert_many([
+            {"_id": ObjectId(), "name": "Blue Team"},
+            {"_id": ObjectId(), "name": "Gold Team"},
+        ])
+
+        db.activity.insert_many([
+            {"_id": ObjectId(), "user": "thundergod", "activity_type": "Cycling", "duration": "1:00:00"},
+            {"_id": ObjectId(), "user": "metalgeek", "activity_type": "Crossfit", "duration": "2:00:00"},
+            {"_id": ObjectId(), "user": "zerocool", "activity_type": "Running", "duration": "1:30:00"},
+            {"_id": ObjectId(), "user": "crashoverride", "activity_type": "Strength", "duration": "0:30:00"},
+            {"_id": ObjectId(), "user": "sleeptoken", "activity_type": "Swimming", "duration": "1:15:00"},
+        ])
+
+        db.leaderboard.insert_many([
+            {"_id": ObjectId(), "user": "thundergod", "score": 100},
+            {"_id": ObjectId(), "user": "metalgeek", "score": 90},
+            {"_id": ObjectId(), "user": "zerocool", "score": 95},
+            {"_id": ObjectId(), "user": "crashoverride", "score": 85},
+            {"_id": ObjectId(), "user": "sleeptoken", "score": 80},
+        ])
+
+        db.workouts.insert_many([
+            {"_id": ObjectId(), "name": "Cycling Training", "description": "Training for a road cycling event"},
+            {"_id": ObjectId(), "name": "Crossfit", "description": "Training for a crossfit competition"},
+            {"_id": ObjectId(), "name": "Running Training", "description": "Training for a marathon"},
+            {"_id": ObjectId(), "name": "Strength Training", "description": "Training for strength"},
+            {"_id": ObjectId(), "name": "Swimming Training", "description": "Training for a swimming competition"},
+        ])
 
         self.stdout.write(self.style.SUCCESS('Successfully populated the database with test data.'))
