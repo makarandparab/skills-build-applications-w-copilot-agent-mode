@@ -129,3 +129,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Enable CORS for all origins
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Ensure consistent handling of trailing slashes in API endpoints
+APPEND_SLASH = True
